@@ -24,8 +24,13 @@ function getAllRamen(url) {
 }
 
 // Callbacks
-const handleClick = (ramen) => {
+const handleClick = (ramenObject) => {
   // Add code
+  detailImg.src = ramenObject.image;
+  name.innerText = ramenObject.name;
+  restaurant.innerText = ramenObject.restaurant;
+  rating.innerText = ramenObject.rating;
+  comment.innerText = ramenObject.comment;
 };
 
 const addSubmitListener = () => {
@@ -46,35 +51,31 @@ function renderRamenInMenu(ramenObject) {
   const img = document.createElement("img");
   //console.log(img);
   img.src = ramenObject.image;
+  img.addEventListener('click', () => handleClick(ramenObject));
   ramenMenu.append(img);
 }
 
-function renderRamenDetails(ramenObject) {
+/*function renderRamenDetails(ramenObject) {
   detailImg.src = ramenObject.image;
   name.innerText = ramenObject.name;
   restaurant.innerText = ramenObject.restaurant;
   rating.innerText = ramenObject.rating;
   comment.innerText = ramenObject.comment;
-}
+}*/
 
 const main = () => {
   // Invoke displayRamens here
+  getAllRamen(ramenURL).then(ramenArray => {
+    displayRamens(ramenArray);
+  })
   // Invoke addSubmitListener here
 }
 
 /////////////////////////////////////////
 // EventListener for DOM Load to run MAIN
 /////////////////////////////////////////
-main()
-
-
-/////////////////////////////
-//Initializer for development
-/////////////////////////////
-getAllRamen(ramenURL).then(ramenArray => {
-  //Test to see renderRamenDetails is working:
-  //renderRamenDetails(ramenArray[0]);
-  displayRamens(ramenArray);
+document.addEventListener("DOMContentLoaded", () => {
+  main()
 });
 
 
